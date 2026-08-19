@@ -171,7 +171,7 @@ class RegisterState extends State<Register> {
                     return 'Phone number is required';
                   }
                   if (value.trim().length < 9) {
-                    return 'phone number should be atleast 9 digits';
+                    return 'phone number is not correct';
                   }
                   return null;
                   },
