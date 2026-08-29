@@ -1,4 +1,6 @@
+import 'package:beverage_express/services/authService.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -21,11 +23,20 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if(formKey.currentState!.validate()) {
-     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('login sucessfull'))
-      );
+      
+      final result = await Authservice().login(email: _emailController.text, password: _passwordController.text);
+
+      if (result['success']) {
+        Navigator.pushReplacementNamed(context, '/home');
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('islogin', true);
+      } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result['message'])),
+          );
+        }
     }
   }
   
@@ -135,7 +146,9 @@ class _LoginState extends State<Login> {
                    Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {}, 
+                      onPressed: () {
+                        _submitForm();
+                      }, 
                       child: const Text(
                         'Forgot password',
                         style: TextStyle(

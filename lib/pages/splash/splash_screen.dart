@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 250,
               fit: BoxFit.cover,
               ),
-              Padding(padding: EdgeInsets.all(1)),
+              const Padding(padding: EdgeInsets.all(1)),
               RichText(
                 text: const TextSpan(
                   text: 'Beverage',

@@ -6,6 +6,7 @@ import 'package:beverage_express/pages/onboard/second.dart';
 import 'package:beverage_express/pages/onboard/third.dart';
 import 'package:beverage_express/pages/auth/login.dart';
 import 'package:beverage_express/pages/auth/register.dart';
+import 'package:beverage_express/pages/home.dart';
 
 
 void main() async {
@@ -21,7 +22,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool seenOnboarding;
   final bool isLogin;
-  const MyApp({super.key, required this.seenOnboarding, required this.isLogin});
+  const MyApp({super.key, required this.seenOnboarding, required this.isLogin});  
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/third':(context) => Third(),
         '/login':(context) => Login(),
         '/register':(context) => Register(),
+        '/home':(context) => Home(),
       },
 
     );
