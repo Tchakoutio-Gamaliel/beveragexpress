@@ -6,7 +6,7 @@ import 'package:beverage_express/pages/onboard/second.dart';
 import 'package:beverage_express/pages/onboard/third.dart';
 import 'package:beverage_express/pages/auth/login.dart';
 import 'package:beverage_express/pages/auth/register.dart';
-import 'package:beverage_express/pages/home.dart';
+import 'package:beverage_express/pages/firs_page.dart';
 
 
 void main() async {
@@ -30,11 +30,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Beverage Express',
       theme: ThemeData(
-        primaryColor:   Color.fromARGB(255, 12, 4, 129),
+        primarySwatch:   Colors.blue,
         useMaterial3: false,
         ),
 
-      initialRoute: '/test',
+      initialRoute: '/firstPage', 
       
       routes: {
         '/test':(context) =>  SplashScreen(seenOnboarding: seenOnboarding, isLogin: isLogin),
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         '/third':(context) => Third(),
         '/login':(context) => Login(),
         '/register':(context) => Register(),
-        '/home':(context) => Home(),
+        '/firstPage':(context) => FirstPages(),
       },
 
     );
