@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:beverage_express/widgets/category_card.dart';
+import '../models/category.dart';
+import '../services/apiService.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -63,7 +66,7 @@ class _HomeState extends State<Home> {
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -109,7 +112,44 @@ class _HomeState extends State<Home> {
                     ],
                   )
                   ),
-                )
+                ),
+                const SizedBox(height: 10,),
+                const Text(
+                  'Categories',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 12, 4, 129),
+                  ),
+                ),
+
+                const SizedBox(height: 15,),
+
+                FutureBuilder <List<Category>>(
+                  future: Apiservice.getCategories(), 
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    final categories = snapshot.data ?? [];
+                    return SizedBox(
+                      height: 110,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        itemBuilder: (context, index) {
+                         return CategoryCard(name: categories[index].name,);
+                        }
+                        ),
+                    );
+                  }
+                  )
             ],
           ),
           ),
