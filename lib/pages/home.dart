@@ -1,7 +1,9 @@
+import 'package:beverage_express/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:beverage_express/widgets/category_card.dart';
 import '../models/category.dart';
 import '../services/apiService.dart';
+import '../widgets/product_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -124,7 +126,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
-                const SizedBox(height: 15,),
+                const SizedBox(height: 15,), 
+ 
+                 // Categories of product display part
 
                 FutureBuilder <List<Category>>(
                   future: Apiservice.getCategories(), 
@@ -149,7 +153,52 @@ class _HomeState extends State<Home> {
                         ),
                     );
                   }
-                  )
+                  ),
+
+                  const SizedBox(height: 15,),
+
+                const Text(
+                  'Popular Products',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 12, 4, 129),
+                  ),
+                ),
+
+                const SizedBox(height: 15,),
+
+                // Popular products display part
+        
+                  FutureBuilder <List<Product>> (
+                    future: Apiservice.getPopullarProduts(), 
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return  Text('Error: ${snapshot.error}');
+                      }
+                      final products = snapshot.data ?? [];
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: products.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: 0.75,
+                          ), 
+                        itemBuilder: (context, index) {
+                          return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://172.24.126.184/beverage-images/${products[index].image}");
+                        }
+                        );
+                    }
+                    ),
             ],
           ),
           ),
