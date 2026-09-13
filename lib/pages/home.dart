@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _categoryFuture = Apiservice.getCategories();
-    _productFuture = Apiservice.getPopullarProduts();
+    _productFuture = Apiservice.getPopullarProduts();  
   }
 
   @override

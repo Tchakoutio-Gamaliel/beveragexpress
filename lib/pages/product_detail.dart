@@ -1,6 +1,8 @@
 import 'package:beverage_express/services/apiService.dart';
 import '../models/productinfo.dart';
 import 'package:flutter/material.dart';
+import '../models/cart_item.dart';
+import '../services/cartService.dart';
 
 class ProductDetail extends StatefulWidget {
     final int productid;
@@ -238,7 +240,20 @@ class _ProductDetailState extends State<ProductDetail> {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-                onPressed: () {}, 
+                onPressed: () {
+                  final item = CartItem(
+                    id: product.id, 
+                    name: product.name, 
+                    image: product.image, 
+                    price: product.price, 
+                    quantity: _qauantity);
+
+                    cartservice.addItem(item);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Product added to cart'))
+                    );
+                }, 
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 12, 4, 129),
                     shape: RoundedRectangleBorder(
