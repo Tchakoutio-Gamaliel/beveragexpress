@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:beverage_express/models/productinfo.dart';
 import 'package:http/http.dart' as http;
 import '../models/category.dart';
 import '../models/product.dart';
@@ -29,6 +30,45 @@ class Apiservice {
       return data.map((json) => Product.fromjson(json)).toList();
     } else {
       throw Exception('Failed to load popular products');
+    }
+  }
+
+  static Future <List<Product>> getProductsByCategory({
+    required String categoryname,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/getProductsByCategory.php'),
+      headers: {'ContentType': 'application/json'},
+      body: jsonEncode({
+        "categoryname": categoryname,
+      })
+    );
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+
+      return data.map((json) => Product.fromjson(json)).toList();
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
+
+  static Future <Productinfo> getProductInfo({
+    required int productid,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/getProductsInfo.php'),
+      headers: {'ContentType': 'application/json'},
+      body: jsonEncode(
+        {
+          "productid": productid,
+        })
+    );
+    if (response.statusCode == 200) {
+      final  data = jsonDecode(response.body);
+
+      return  Productinfo.fromjson(data);
+    } else {
+      throw Exception("Failed to load products");
     }
   }
 }

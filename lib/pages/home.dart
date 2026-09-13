@@ -13,6 +13,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late Future<List<Category>>  _categoryFuture;
+  late Future<List<Product>> _productFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _categoryFuture = Apiservice.getCategories();
+    _productFuture = Apiservice.getPopullarProduts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -131,7 +141,7 @@ class _HomeState extends State<Home> {
                  // Categories of product display part
 
                 FutureBuilder <List<Category>>(
-                  future: Apiservice.getCategories(), 
+                  future: _categoryFuture, 
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -172,7 +182,7 @@ class _HomeState extends State<Home> {
                 // Popular products display part
         
                   FutureBuilder <List<Product>> (
-                    future: Apiservice.getPopullarProduts(), 
+                    future: _productFuture, 
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(

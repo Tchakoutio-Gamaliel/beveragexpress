@@ -1,4 +1,5 @@
- import 'package:flutter/material.dart';
+ import 'package:beverage_express/pages/products_page.dart';
+import 'package:flutter/material.dart';
 
  class CategoryCard extends StatelessWidget {
     final String name;
@@ -25,7 +26,14 @@
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductsPage(categoryname: name,),
+            ),
+          );
+      },
      child: Container(
         width: 90,
         margin: const EdgeInsets.only(right: 12),

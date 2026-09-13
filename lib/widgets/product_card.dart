@@ -1,3 +1,4 @@
+import 'package:beverage_express/pages/product_detail.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
@@ -15,7 +16,17 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return  GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context, 
+          MaterialPageRoute(
+            builder: (context) => ProductDetail(productid: id)
+            )
+          );
+      },
+
+    child:  Container(
       width: 160,
       
       margin: const EdgeInsets.only(right: 12),
@@ -78,6 +89,7 @@ class ProductCard extends StatelessWidget {
             )
         ],
       ),
+    )
     );
   }
 }
