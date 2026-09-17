@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/cart_item.dart';
 
 class Cartservice {
@@ -5,6 +9,32 @@ class Cartservice {
 
   //get all cart items
   List<CartItem> get items => _items;
+
+  //load cart from local storage
+  Future<void> loadCart() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String? cartData = prefs.getString('cart');
+
+    if(cartData != null) {
+      final List <dynamic> decodedData = jsonDecode(cartData);
+      _items.clear();
+      for (final item in decodedData) {
+        _items.add(CartItem.fromjson(item)
+        );
+      }
+    }
+  }
+
+  //save cart to localstorage
+  Future<void> saveCart() async{
+    print("save started");
+    final prefs = await SharedPreferences.getInstance();
+    print("shared Preference obtained");
+    final List<Map<String, dynamic>> cartData = _items.map((item) => item.toJson()).toList();
+    final String data = jsonEncode(cartData);
+    await prefs.setString('cart', data);
+    print("cart saved: $data");
+  }
 
   //add a product to the cart
   void addItem(CartItem item) {
@@ -19,6 +49,8 @@ class Cartservice {
       // product do not exist
       _items.add(item);
     }
+
+    saveCart();
   }
 
   //remove a product completletely
@@ -26,6 +58,8 @@ class Cartservice {
     _items.removeWhere(
       (item) => item.id == id,
     );
+
+    saveCart();
   }
 
   //increase quantity
@@ -37,6 +71,8 @@ class Cartservice {
     if (index != -1) {
       _items[index].quantity++;
     }
+
+    saveCart();
   }
 
   //decrease quantity
@@ -50,6 +86,8 @@ class Cartservice {
         _items[index].quantity--;
       }
     }
+
+    saveCart();
   }
 
   //calculate total price
@@ -77,6 +115,7 @@ class Cartservice {
   //empty the cart
   void clearCart() {
     _items.clear();
+    saveCart();
   }
 }
 

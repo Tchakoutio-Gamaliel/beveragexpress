@@ -76,7 +76,7 @@ class ProductsPage extends StatelessWidget {
                           childAspectRatio: 0.75,
                           ), 
                         itemBuilder: (context, index) {
-                          return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://172.24.126.184/beverage-images/${products[index].image}");
+                          return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://10.124.76.100/beverage-images/${products[index].image}");
                         }
                         );
                   }

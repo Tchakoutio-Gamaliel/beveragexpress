@@ -65,7 +65,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                 width: double.infinity,
                                 height: 300,
                                 child: Image.network(
-                                'http://172.24.126.184/beverage-images/${product.image}',
+                                'http://10.124.76.100/beverage-images/${product.image}',
                                 errorBuilder: (context, error, StackTrace) {
                                   return const Icon(
                                   Icons.image_not_supported,
@@ -264,7 +264,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     'Add to cart - ${_qauantity*(product.price)} FCFA',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 24
+                      fontSize: 16
                     ),
                 ),
                 ),

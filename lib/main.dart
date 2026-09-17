@@ -1,3 +1,4 @@
+import 'package:beverage_express/services/cartService.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:beverage_express/pages/splash/splash_screen.dart';
@@ -11,6 +12,7 @@ import 'package:beverage_express/pages/firs_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await cartservice.loadCart();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
   bool isLogin = prefs.getBool('isLogin') ?? false;
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
         ),
 
-      initialRoute: '/firstPage', 
+      initialRoute: '/test', 
       
       routes: {
         '/test':(context) =>  SplashScreen(seenOnboarding: seenOnboarding, isLogin: isLogin),

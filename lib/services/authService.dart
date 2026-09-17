@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class Authservice {
-  static const String baseUrl = 'http://10.140.220.184/beverage-api';
+  static const String baseUrl = 'http://10.124.76.100/beverage-api';
 
   Future<Map<String, dynamic>> register({
     required String name,

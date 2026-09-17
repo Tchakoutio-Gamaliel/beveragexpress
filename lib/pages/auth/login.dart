@@ -1,3 +1,4 @@
+import 'package:beverage_express/pages/firs_page.dart';
 import 'package:beverage_express/services/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,9 +30,14 @@ class _LoginState extends State<Login> {
       final result = await Authservice().login(email: _emailController.text, password: _passwordController.text);
 
       if (result['success']) {
-        Navigator.pushReplacementNamed(context, '/home');
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('islogin', true);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLogin', true);
+ 
+        Navigator.pushAndRemoveUntil(
+          context, 
+          MaterialPageRoute(builder: (_) => const FirstPages()), 
+          (route) => false,
+          );
       } else {
           ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(result['message'])),

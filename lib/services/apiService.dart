@@ -5,7 +5,7 @@ import '../models/category.dart';
 import '../models/product.dart';
 
 class Apiservice {
-  static const String baseUrl = 'http://172.24.126.184/beverage-api';
+  static const String baseUrl = 'http://10.124.76.100/beverage-api'; 
 
   static Future <List<Category>> getCategories() async {
     final response = await http.get(

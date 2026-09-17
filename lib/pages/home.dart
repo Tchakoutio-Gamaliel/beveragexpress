@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 12, 4, 129),
         elevation: 0,
         title: RichText(
@@ -204,7 +205,7 @@ class _HomeState extends State<Home> {
                           childAspectRatio: 0.75,
                           ), 
                         itemBuilder: (context, index) {
-                          return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://172.24.126.184/beverage-images/${products[index].image}");
+                          return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://10.124.76.100/beverage-images/${products[index].image}");
                         }
                         );
                     }

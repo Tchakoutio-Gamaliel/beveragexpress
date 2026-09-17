@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:beverage_express/services/authService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -39,9 +39,11 @@ class RegisterState extends State<Register> {
     );
 
     if (result['success']) {
-      Navigator.pushReplacementNamed(context, '/home');
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('islogin', true);
+      ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content:  Text('register successfully')),);
+
+      Navigator.pushReplacementNamed(context, '/login');
+
     } else {
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result['message'])),
