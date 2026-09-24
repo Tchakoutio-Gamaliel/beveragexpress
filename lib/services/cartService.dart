@@ -27,13 +27,10 @@ class Cartservice {
 
   //save cart to localstorage
   Future<void> saveCart() async{
-    print("save started");
     final prefs = await SharedPreferences.getInstance();
-    print("shared Preference obtained");
     final List<Map<String, dynamic>> cartData = _items.map((item) => item.toJson()).toList();
     final String data = jsonEncode(cartData);
     await prefs.setString('cart', data);
-    print("cart saved: $data");
   }
 
   //add a product to the cart

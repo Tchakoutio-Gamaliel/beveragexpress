@@ -71,4 +71,20 @@ class Apiservice {
       throw Exception("Failed to load products");
     }
   }
+
+  static Future <List<Product>> searchProducts({
+  required String search,
+  }) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/search_products.php?search=$search')
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+
+      return data.map((json) => Product.fromjson(json)).toList();
+    } else {
+      throw Exception('Fail to load products');
+    }
+  }
 }
