@@ -1,5 +1,6 @@
 import 'package:beverage_express/services/cartService.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:beverage_express/pages/splash/splash_screen.dart';
 import 'package:beverage_express/pages/onboard/first.dart';
@@ -12,6 +13,10 @@ import 'package:beverage_express/pages/firs_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // initialise hive
+  await Hive.initFlutter();
+  // open the box
+  await Hive.openBox('favorite');
   await cartservice.loadCart();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seenOnboarding') ?? false;

@@ -64,7 +64,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     //product image
                     Image.network(
-                      'http://10.124.76.100/beverage-images/${item.image}',
+                      'http://127.0.0.1:8080/beverage-images/${item.image}',
                       width: 80,
                       height: 80,
                       fit: BoxFit.cover,

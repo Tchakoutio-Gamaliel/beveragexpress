@@ -1,4 +1,5 @@
 import 'package:beverage_express/services/apiService.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../models/productinfo.dart';
 import 'package:flutter/material.dart';
 import '../models/cart_item.dart';
@@ -18,6 +19,7 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
      int _qauantity = 1;
      late Future<Productinfo> __productinfoFuture;
+     final  myFavorites = Hive.box('favorite');
 
 
     void _incrementQuantity() {
@@ -65,7 +67,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                 width: double.infinity,
                                 height: 300,
                                 child: Image.network(
-                                'http://10.124.76.100/beverage-images/${product.image}',
+                                'http://127.0.0.1:8080/beverage-images/${product.image}',
                                 errorBuilder: (context, error, StackTrace) {
                                   return const Icon(
                                   Icons.image_not_supported,
@@ -89,8 +91,25 @@ class _ProductDetailState extends State<ProductDetail> {
                                       child: IconButton(
                                           padding: EdgeInsets.zero,
                                           constraints: const BoxConstraints(),
-                                          onPressed: () {}, 
-                                          icon: const Icon(Icons.favorite),
+                                          onPressed: () async {
+                                            if (myFavorites.containsKey(product.id)) {
+                                              await myFavorites.delete(product.id);
+                                            } else {
+                                              await myFavorites.put(
+                                                product.id,
+                                                {
+                                                  'id': product.id,
+                                                  'name': product.name,
+                                                  'price': product.price,
+                                                  'image': product.image,
+                                                }
+                                                );
+                                            }
+                                            setState(() {});
+                                          }, 
+                                          icon: Icon(
+                                            myFavorites.containsKey(product.id) ? Icons.favorite : Icons.favorite_border
+                                            ),
                                           iconSize: 25,
                                           color: Colors.red,
                                           ),

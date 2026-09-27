@@ -97,7 +97,7 @@ class _SearchPageState extends State<SearchPage> {
               ), 
               itemBuilder: (context, index) {
                 print(products[index].name);
-                return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://10.124.76.100/beverage-images/${products[index].image}");
+                return ProductCard(name: products[index].name, price: products[index].price, id: products[index].id, image: "http://127.0.0.1:8080/beverage-images/${products[index].image}");
               }
             );
           
