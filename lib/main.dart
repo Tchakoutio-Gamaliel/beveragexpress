@@ -1,4 +1,10 @@
+import 'package:beverage_express/pages/myAddresses_page.dart';
+import 'package:beverage_express/pages/myOrders_page.dart';
+import 'package:beverage_express/pages/notification_page.dart';
+import 'package:beverage_express/pages/profile_page.dart';
+import 'package:beverage_express/pages/setting_page.dart';
 import 'package:beverage_express/services/cartService.dart';
+import 'package:beverage_express/services/cart_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +24,7 @@ void main() async {
   // open the box
   await Hive.openBox('favorite');
   await cartservice.loadCart();
+  await loadCartCount();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
   bool isLogin = prefs.getBool('isLogin') ?? false;
@@ -38,6 +45,7 @@ class MyApp extends StatelessWidget {
       title: 'Beverage Express',
       theme: ThemeData(
         primarySwatch:   Colors.blue,
+        fontFamily: 'inter',
         useMaterial3: false,
         ),
 
@@ -51,6 +59,11 @@ class MyApp extends StatelessWidget {
         '/login':(context) => Login(),
         '/register':(context) => Register(),
         '/firstPage':(context) => FirstPages(),
+        '/ProfilePage':(context) => ProfilePage(),
+        '/notificationpage':(context) => NotificationPage(),
+        '/settingpage':(context) => SettingPage(),
+        '/myaddressespage':(context) => MyaddressesPage(),
+        '/myorderspage':(context) => MyordersPage(),
       },
 
     );

@@ -27,17 +27,16 @@ class ProductCard extends StatelessWidget {
       },
 
     child:  Container(
-      width: 160,
-      
-      margin: const EdgeInsets.only(right: 12),
+      width: 170,
+      margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 5,
-            offset: Offset(0, 2),
+            offset: Offset(0, 3),
           )
         ],
       ),
@@ -61,32 +60,31 @@ class ProductCard extends StatelessWidget {
               },
             ),
           ),
-           Padding(
-            padding:  EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    ),
+              const SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      ),
+                  ),
                 ),
                 const SizedBox(height: 10,),
-                Text(
-                  "$price FCFA",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color.fromARGB(255, 12, 4, 129),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    "$price FCFA",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 12, 4, 129),
+                    ),
                   ),
                 )
-              ],
-            ),
-            )
         ],
       ),
     )

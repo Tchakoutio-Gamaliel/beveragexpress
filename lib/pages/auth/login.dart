@@ -32,6 +32,7 @@ class _LoginState extends State<Login> {
       if (result['success']) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLogin', true);
+      await prefs.setString('userName', result['user']['name']);
  
         Navigator.pushAndRemoveUntil(
           context, 

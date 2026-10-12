@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
 import '../models/cart_item.dart';
 
 class Cartservice {
   final List<CartItem> _items = [];
+  ValueNotifier<int> cartCount = ValueNotifier<int>(0);
 
   //get all cart items
   List<CartItem> get items => _items;
@@ -23,6 +25,7 @@ class Cartservice {
         );
       }
     }
+    cartCount.value = _items.fold(0, (sum, item) => sum + item.quantity);
   }
 
   //save cart to localstorage
@@ -31,6 +34,8 @@ class Cartservice {
     final List<Map<String, dynamic>> cartData = _items.map((item) => item.toJson()).toList();
     final String data = jsonEncode(cartData);
     await prefs.setString('cart', data);
+    //update the badge here
+    cartCount.value = _items.fold(0, (sum, item) => sum + item.quantity);
   }
 
   //add a product to the cart

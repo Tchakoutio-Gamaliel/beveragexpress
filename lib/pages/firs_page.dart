@@ -3,7 +3,10 @@ import 'package:beverage_express/pages/favorite_page.dart';
 import 'package:beverage_express/pages/home.dart';
 import 'package:beverage_express/pages/profile_page.dart';
 import 'package:beverage_express/pages/search_page.dart';
+//import 'package:beverage_express/services/cart_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:beverage_express/services/cartService.dart';
 
 class FirstPages extends StatefulWidget {
   const FirstPages({super.key});
@@ -14,6 +17,7 @@ class FirstPages extends StatefulWidget {
 
 class _FirstPagesState extends State<FirstPages> {
   int _selectedIndex = 0;
+
 
   final List _pages = [
   Home(),
@@ -38,7 +42,7 @@ class _FirstPagesState extends State<FirstPages> {
       selectedItemColor: Colors.orange,
       unselectedItemColor: Colors.white,
       currentIndex: _selectedIndex,
-        items: [
+        items:   [
         BottomNavigationBarItem(
           icon: Icon(Icons.home,),
           label: 'Home',
@@ -48,9 +52,18 @@ class _FirstPagesState extends State<FirstPages> {
           label: 'Search',
           ),
          BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: 'Cart',
-        ),
+          icon: ValueListenableBuilder(
+            valueListenable: cartservice.cartCount, 
+           builder: (context, count, child) {
+            return badges.Badge(
+            showBadge: count > 0,
+            badgeContent: Text("$count", style: const TextStyle(color: Colors.white),),
+            child: const Icon(Icons.shopping_cart),
+            );
+           } ),
+           label: 'Cart',
+            ),
+          
          BottomNavigationBarItem(
           icon: Icon(Icons.favorite),
           label: 'Favorite',

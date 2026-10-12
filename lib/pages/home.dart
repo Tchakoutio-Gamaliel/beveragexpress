@@ -1,6 +1,10 @@
 import 'package:beverage_express/models/product.dart';
+import 'package:beverage_express/pages/cart_page.dart';
+import 'package:beverage_express/pages/search_page.dart';
+import 'package:beverage_express/services/cartService.dart';
 import 'package:flutter/material.dart';
 import 'package:beverage_express/widgets/category_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/category.dart';
 import '../services/apiService.dart';
 import '../widgets/product_card.dart';
@@ -15,12 +19,22 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Future<List<Category>>  _categoryFuture;
   late Future<List<Product>> _productFuture;
+  String? userName = 'Loading...';
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _categoryFuture = Apiservice.getCategories();
     _productFuture = Apiservice.getPopullarProduts();  
+    loadUserName();
+  }
+
+  Future<void> loadUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('userName');
+    });
   }
 
   @override
@@ -51,8 +65,16 @@ class _HomeState extends State<Home> {
                 ),
                 ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.person_rounded)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_rounded)),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/ProfilePage');
+            }, 
+            icon: const Icon(Icons.person_rounded)),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/notificationpage');
+            }, 
+            icon: const Icon(Icons.notifications_rounded)),
           const SizedBox(width: 8,)
         ],
         bottom:  PreferredSize(
@@ -60,6 +82,16 @@ class _HomeState extends State<Home> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: TextField(
+              controller: searchController,
+              readOnly: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchPage(),
+                    )
+                  );
+              },
               decoration: InputDecoration(
                 hintText: 'Search Beverage',
                 prefixIcon: const Icon(Icons.search),
@@ -96,8 +128,8 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     const Center(
-                        child: Text('Welcome back Gamaliel', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),),
+                      Center(
+                        child: Text('Hello $userName', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),),
                         ),
                       const SizedBox(height: 8,),
                       const Text('What would you like to order today?', style: TextStyle(fontSize: 20, color: Colors.white),),
@@ -106,7 +138,20 @@ class _HomeState extends State<Home> {
                         width: 160,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {}, 
+                          onPressed: () {
+                            if(cartservice.items.isEmpty){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Your cart is empty, Add products before ordering.'))
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CartPage(),
+                                )
+                                );
+                            }
+                          }, 
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
